@@ -86,7 +86,7 @@ void displayDateDcf77(void)
    }
    
    
-   (void) sprintf(datum, "%02s %02d.%02d.%04d", day, dcf77Day, dcf77Month, dcf77Year);
+   (void) sprintf(datum, "%s %02d.%02d.%04d", day, dcf77Day, dcf77Month, dcf77Year);
    writeLine(datum, 1);
 }
 

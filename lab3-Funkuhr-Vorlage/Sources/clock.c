@@ -13,6 +13,8 @@
 #include "lcd.h"
 #include "led.h"
 #include "dcf77.h"
+#include "thermo.h"
+#include "ad.h"
 
 // Defines
 #define ONESEC  (1000/10)                       // 10ms ticks per second
@@ -45,8 +47,9 @@ void tick10ms(void)
     } else if (ticks == MSEC200)
     {   clrLED(0x01);
     }
-    uptime = uptime + 10;                       // Update CPU time base
-
+    uptime = uptime + 10;  // Update CPU time base
+                           
+    updateThermo(500);//(updateAD());
     dcf77Event = sampleSignalDCF77(uptime);     // Sample the DCF77 signal
 
     //--- Add code here, which shall be executed every 10ms -------------------
@@ -90,9 +93,10 @@ void setClock(char hours, char minutes, char seconds)
 // Parameter:   -
 // Returns:     -
 void displayTimeClock(void)
-{   char uhrzeit[32] = "00:00:00";
-    (void) sprintf(uhrzeit, "%02d:%02d:%02d", hrs, mins, secs );
-    writeLine(uhrzeit, 0);
+{   
+  char uhrzeit_temp[32] = "00:00:00"; 
+  (void) sprintf(uhrzeit_temp, "%02d:%02d:%02d %c%d°C", hrs, mins, secs, getTempChar(), getTempValue());
+  writeLine(uhrzeit_temp, 0);
 }
 
 // ***************************************************************************
