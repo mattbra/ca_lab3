@@ -27,7 +27,7 @@
 DCF77EVENT dcf77Event = NODCF77EVENT;
 
 // Modul internal global variables
-static int  dcf77Year=2017, dcf77Month=1, dcf77Day=1, dcf77Hour=0, dcf77Minute=0;       //dcf77 Date and time as integer values
+static int  dcf77Year=2017, dcf77Month=1, dcf77Day=1, dcf77Weekday = 0, dcf77Hour=0, dcf77Minute=0;       //dcf77 Date and time as integer values
 
 // Prototypes of functions simulation DCF77 signals, when testing without
 // a DCF77 radio signal receiver
@@ -69,10 +69,25 @@ void initDCF77(void)
 // Parameter:   -
 // Returns:     -
 void displayDateDcf77(void)
-{   char datum[32];
-
-    (void) sprintf(datum, "%02d.%02d.%04d", dcf77Day, dcf77Month, dcf77Year);
-    writeLine(datum, 1);
+{   
+   char datum[32];
+   char day[3] = "   ";
+   
+   switch(dcf77Weekday)
+   {
+    case 1 :  (void) sprintf(day, "Mon"); break;
+    case 2 :  (void) sprintf(day, "Tue"); break;
+    case 3 :  (void) sprintf(day, "Wed"); break;
+    case 4 :  (void) sprintf(day, "Thu"); break;
+    case 5 :  (void) sprintf(day, "Fri"); break;
+    case 6 :  (void) sprintf(day, "Sat"); break;
+    case 7 :  (void) sprintf(day, "Sun"); break;
+    default:  (void) sprintf(day, "   "); break;
+   }
+   
+   
+   (void) sprintf(datum, "%02s %02d.%02d.%04d", day, dcf77Day, dcf77Month, dcf77Year);
+   writeLine(datum, 1);
 }
 
 // ****************************************************************************
@@ -208,6 +223,9 @@ void processEventsDCF77(DCF77EVENT event)
     dcf77Day = 1 * signal[36] + 2 * signal[37] + 4 * signal[38] + 8 * signal[39] + 10 * signal[40] + 20 * signal[41];
     dcf77Month = 1 * signal[45] + 2 * signal[46] + 4 * signal[47] + 8 * signal[48] + 10 * signal[49];
     dcf77Year = 1 * signal[50] + 2 * signal[51] + 4 * signal[52] + 8 * signal[53] + 10 * signal[54] + 20 * signal[55] + 40 * signal[56] + 80 * signal[57];
+    
+    //Prep. Task 4.2
+    dcf77Weekday = 1 * signal[42] + 2 * signal[43] + 4 * signal[44];
     
     //check data
     if (  ((dcf77Minute >= 0) && (dcf77Minute <= 59))
