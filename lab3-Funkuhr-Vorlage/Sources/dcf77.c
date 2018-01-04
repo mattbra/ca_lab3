@@ -95,6 +95,15 @@ DCF77EVENT sampleSignalDCF77(int currentTime)
   lastEdge = presentEdge;
   presentEdge = readPortSim();
   
+  if (presentEdge == 0)
+  {
+    setLED(0x02); //set LED B.1, if signal is low
+  } 
+  else 
+  {
+    clrLED(0x02); //clear LED B.1, if signal is high  
+  }
+  
   //Raising Edge
   if ((lastEdge == 0) && (presentEdge == 1)) 
   {
@@ -160,29 +169,36 @@ void processEventsDCF77(DCF77EVENT event)
   {
     index = 0;
     error = 0;
+    clrLED(0x04); //clear LED B.2, if valid data is received
   } 
   
   else if (event == INVALID) 
   {
     error = 1;
     index++;
+    setLED(0x04); //set LED B.2, if an error is detected
+    clrLED(0x08); //clear LED B.3, when no or wrong data has been received
   }
   
   else if (event == VALIDZERO) 
   {
     signal[index] = 0;
     index++;
+    clrLED(0x04); //clear LED B.2, if valid data is received
   }
   
   else if (event == VALIDONE) 
   {
     signal[index] = 1;
     index++;
+    clrLED(0x04); //clear LED B.2, if valid data is received
   } 
 
   //Read data from complete signal
   if ((index == 58) && (error == 0))
   {
+  
+    setLED(0x08); //set LED B.3, when a complete and correct time information has been decoded
     //Time
     dcf77Minute = 1 * signal[21] + 2 * signal[22] + 4 * signal[23] + 8 * signal[24] + 10 * signal[25] + 20 * signal[26] + 80 * signal[27];  
     dcf77Hour = 1 * signal[29] + 2 * signal[30] + 3 * signal[31] + 4 * signal[32] + 10 * signal[33] + 20 * signal[34];
@@ -193,7 +209,20 @@ void processEventsDCF77(DCF77EVENT event)
     dcf77Month = 1 * signal[45] + 2 * signal[46] + 4 * signal[47] + 8 * signal[48] + 10 * signal[49];
     dcf77Year = 1 * signal[50] + 2 * signal[51] + 4 * signal[52] + 8 * signal[53] + 10 * signal[54] + 20 * signal[55] + 40 * signal[56] + 80 * signal[57];
     
-    setClock((char) dcf77Hour, (char) dcf77Minute, 0);
+    //check data
+    if (  ((dcf77Minute >= 0) && (dcf77Minute <= 59))
+        &&((dcf77Hour >= 0) && (dcf77Hour <= 23))
+        &&((dcf77Day >= 0) && (dcf77Day <= 31))
+        &&((dcf77Month >= 0) && (dcf77Month <= 12))) 
+    {
+      setClock((char) dcf77Hour, (char) dcf77Minute, 0);
+    } 
+    else 
+    {
+      clrLED(0x08); //clear LED B.3, when no or wrong data has been received  
+    }
+    
+    
   }
 }
 

@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\Matthias\Google Drive\Hochschule Esslingen\TIB4\Computerarchitektur\Labor_Matze_3\lab3-Funkuhr-Vorlage\bin\Simulator.abs"
+PROGRAM "C:\GIT\CA_LAB\ca_lab3\lab3-Funkuhr-Vorlage\bin\Simulator.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -35,7 +35,7 @@ extern struct _tagStartup {
   long     stackOffset    0x11AF
   unsigned nofZeroOut     1
   _Range   pZeroOut       0x1000     176
-  _Copy    *toCopyDownBeg 0xCB1F
+  _Copy    *toCopyDownBeg 0xCB85
 } _startupData;
 
 *********************************************************************************************
@@ -46,8 +46,8 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        15     R     0xC15B     0xC169   ROM_C000
 .rodata                          116     R     0xC16A     0xC1DD   ROM_C000
 .rodata1                          30     R     0xC1DE     0xC1FB   ROM_C000
-.text                           2217     R     0xC1FC     0xCAA4   ROM_C000
-.copy                             84     R     0xCB1F     0xCB72   ROM_C000
+.text                           2319     R     0xC1FC     0xCB0A   ROM_C000
+.copy                             84     R     0xCB85     0xCBD8   ROM_C000
 .data                             80   R/W     0x1000     0x104F   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -576,13 +576,13 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg524
 ticker.asm__ORG00001               2     R     0xFFE6     0xFFE7   .absSeg525
 .bss                              96   R/W     0x1050     0x10AF   RAM
-RUNTIME                          113     R     0xCAA5     0xCB15   ROM_C000
-.const                             9     R     0xCB16     0xCB1E   ROM_C000
+RUNTIME                          113     R     0xCB0B     0xCB7B   ROM_C000
+.const                             9     R     0xCB7C     0xCB84   ROM_C000
 .stack                           256   R/W     0x10B0     0x11AF   RAM
 .vectSeg526_vect                   2     R     0xFFFE     0xFFFF   .vectSeg526
 
 Summary of section sizes per section type:
-READ_ONLY (R):         B77 (dec:     2935)
+READ_ONLY (R):         BDD (dec:     3037)
 READ_WRITE (R/W):      1B0 (dec:      432)
 NO_INIT (N/I):         24E (dec:      590)
 
@@ -1149,13 +1149,13 @@ MODULE:                 -- PRINTF.C.o (ansisi.lib) --
      pbuf                                      1050       6       6      15   .bss        
 MODULE:                 -- rtshc12.c.o (ansisi.lib) --
 - PROCEDURES:
-     _LSHRS                                    CAA5      12      18       1   RUNTIME     
-     _LCMP_P                                   CAB7      15      21       3   RUNTIME     
-     _LNEG                                     CACC       D      13       1   RUNTIME     
-     _ILSEXT                                   CAD9       7       7       2   RUNTIME     
-     _CASE_DIRECT_BYTE                         CAE0       5       5       1   RUNTIME     
-     _CASE_SEARCH_8                            CAE5      17      23       1   RUNTIME     
-     _CASE_SEARCH_8_BYTE                       CAFC      1A      26       1   RUNTIME     
+     _LSHRS                                    CB0B      12      18       1   RUNTIME     
+     _LCMP_P                                   CB1D      15      21       3   RUNTIME     
+     _LNEG                                     CB32       D      13       1   RUNTIME     
+     _ILSEXT                                   CB3F       7       7       2   RUNTIME     
+     _CASE_DIRECT_BYTE                         CB46       5       5       1   RUNTIME     
+     _CASE_SEARCH_8                            CB4B      17      23       1   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       CB62      1A      26       1   RUNTIME     
 - VARIABLES:
 MODULE:                 -- lcd.asm.o --
 - PROCEDURES:
@@ -1178,21 +1178,21 @@ MODULE:                 -- lcd.asm.o --
 - VARIABLES:
      VAR00001                                  1000       1       1       2   .data       
      temp1                                     1001       1       1       0   .data       
-     VAR00002                                  CB16       1       1       1   .const      
-     VAR00003                                  CB17       1       1       0   .const      
-     VAR00004                                  CB18       1       1       0   .const      
-     VAR00005                                  CB19       1       1       0   .const      
-     VAR00006                                  CB1A       1       1       1   .const      
-     VAR00007                                  CB1B       1       1       0   .const      
-     VAR00008                                  CB1C       1       1       0   .const      
-     VAR00009                                  CB1D       1       1       0   .const      
-     VAR00010                                  CB1E       1       1       0   .const      
+     VAR00002                                  CB7C       1       1       1   .const      
+     VAR00003                                  CB7D       1       1       0   .const      
+     VAR00004                                  CB7E       1       1       0   .const      
+     VAR00005                                  CB7F       1       1       0   .const      
+     VAR00006                                  CB80       1       1       1   .const      
+     VAR00007                                  CB81       1       1       0   .const      
+     VAR00008                                  CB82       1       1       0   .const      
+     VAR00009                                  CB83       1       1       0   .const      
+     VAR00010                                  CB84       1       1       0   .const      
 MODULE:                 -- led.asm.o --
 - PROCEDURES:
      initLED                                   C0EC      1B      27       1   .init       
      toggleLED                                 C107       5       5       0   .init       
-     setLED                                    C10C       5       5       1   .init       
-     clrLED                                    C111       6       6       1   .init       
+     setLED                                    C10C       5       5       4   .init       
+     clrLED                                    C111       6       6       4   .init       
 - VARIABLES:
 MODULE:                 -- ticker.asm.o --
 - PROCEDURES:
@@ -1220,18 +1220,18 @@ MODULE:                 -- dcf77.c.o --
 - PROCEDURES:
      initDCF77                                 C7B3      13      19       1   .text       
      displayDateDcf77                          C7C6      29      41       2   .text       
-     sampleSignalDCF77                         C7EF      8E     142       1   .text       
-     processEventsDCF77                        C87D     179     377      13   .text       
+     sampleSignalDCF77                         C7EF      9F     159       1   .text       
+     processEventsDCF77                        C88E     1CE     462      18   .text       
 - VARIABLES:
      STRING..02d..02d..04d.1                   C1ED       F      15       1   .rodata1    
      dcf77Year                                 1002       2       2       2   .data       
-     dcf77Month                                1004       2       2       2   .data       
-     dcf77Day                                  1006       2       2       2   .data       
+     dcf77Month                                1004       2       2       3   .data       
+     dcf77Day                                  1006       2       2       3   .data       
      dcf77Event                                105F       2       2       3   .bss        
-     dcf77Hour                                 1061       2       2       3   .bss        
+     dcf77Hour                                 1061       2       2       4   .bss        
      dcf77Minute                               1063       2       2       3   .bss        
      lastEdge.2                                1065       1       1       4   .bss        
-     presentEdge.3                             1066       1       1       4   .bss        
+     presentEdge.3                             1066       1       1       5   .bss        
      T_high.5                                  1067       2       2       1   .bss        
      T_low.6                                   1069       2       2       3   .bss        
      T_raisingMark.7                           106B       2       2       2   .bss        
@@ -1241,8 +1241,8 @@ MODULE:                 -- dcf77.c.o --
      signal.11                                 1073      3B      59      34   .bss        
 MODULE:                 -- dcf77Sim.c.o --
 - PROCEDURES:
-     readPortSim                               C9F6      AE     174       1   .text       
-     initializePortSim                         CAA4       1       1       1   .text       
+     readPortSim                               CA5C      AE     174       1   .text       
+     initializePortSim                         CB0A       1       1       1   .text       
 - VARIABLES:
      dcf77Data                                 1008      40      64       2   .data       
      dcf77DataMin                              1048       2       2       1   .data       
@@ -1264,7 +1264,7 @@ MODULE STATISTIC
   led.asm.o                                    0     43      0
   ticker.asm.o                                 0     68      2
   clock.c.o                                    9    198     15
-  dcf77.c.o                                   85    579     15
+  dcf77.c.o                                   85    681     15
   dcf77Sim.c.o                                74    175      0
   other                                      256     17     84
 
@@ -2879,8 +2879,8 @@ OBJECT LIST SORTED BY ADDRESS
      VAR00001                                  1000       1       1       2   .data       
      temp1                                     1001       1       1       0   .data       
      dcf77Year                                 1002       2       2       2   .data       
-     dcf77Month                                1004       2       2       2   .data       
-     dcf77Day                                  1006       2       2       2   .data       
+     dcf77Month                                1004       2       2       3   .data       
+     dcf77Day                                  1006       2       2       3   .data       
      dcf77Data                                 1008      40      64       2   .data       
      dcf77DataMin                              1048       2       2       1   .data       
      i10ms.1                                   104A       2       2       2   .data       
@@ -2894,10 +2894,10 @@ OBJECT LIST SORTED BY ADDRESS
      uptime                                    105B       2       2       2   .bss        
      ticks                                     105D       2       2       4   .bss        
      dcf77Event                                105F       2       2       3   .bss        
-     dcf77Hour                                 1061       2       2       3   .bss        
+     dcf77Hour                                 1061       2       2       4   .bss        
      dcf77Minute                               1063       2       2       3   .bss        
      lastEdge.2                                1065       1       1       4   .bss        
-     presentEdge.3                             1066       1       1       4   .bss        
+     presentEdge.3                             1066       1       1       5   .bss        
      T_high.5                                  1067       2       2       1   .bss        
      T_low.6                                   1069       2       2       3   .bss        
      T_raisingMark.7                           106B       2       2       2   .bss        
@@ -2926,8 +2926,8 @@ OBJECT LIST SORTED BY ADDRESS
      outputByte                                C0E0       C      12       5   .init       
      initLED                                   C0EC      1B      27       1   .init       
      toggleLED                                 C107       5       5       0   .init       
-     setLED                                    C10C       5       5       1   .init       
-     clrLED                                    C111       6       6       1   .init       
+     setLED                                    C10C       5       5       4   .init       
+     clrLED                                    C111       6       6       4   .init       
      initTicker                                C117      16      22       1   .init       
      isrECT4                                   C12D      26      38       1   .init       
      pllWait                                   C153       8       8       0   .init       
@@ -2948,26 +2948,26 @@ OBJECT LIST SORTED BY ADDRESS
      displayTimeClock                          C766      4D      77       2   .text       
      initDCF77                                 C7B3      13      19       1   .text       
      displayDateDcf77                          C7C6      29      41       2   .text       
-     sampleSignalDCF77                         C7EF      8E     142       1   .text       
-     processEventsDCF77                        C87D     179     377      13   .text       
-     readPortSim                               C9F6      AE     174       1   .text       
-     initializePortSim                         CAA4       1       1       1   .text       
-     _LSHRS                                    CAA5      12      18       1   RUNTIME     
-     _LCMP_P                                   CAB7      15      21       3   RUNTIME     
-     _LNEG                                     CACC       D      13       1   RUNTIME     
-     _ILSEXT                                   CAD9       7       7       2   RUNTIME     
-     _CASE_DIRECT_BYTE                         CAE0       5       5       1   RUNTIME     
-     _CASE_SEARCH_8                            CAE5      17      23       1   RUNTIME     
-     _CASE_SEARCH_8_BYTE                       CAFC      1A      26       1   RUNTIME     
-     VAR00002                                  CB16       1       1       1   .const      
-     VAR00003                                  CB17       1       1       0   .const      
-     VAR00004                                  CB18       1       1       0   .const      
-     VAR00005                                  CB19       1       1       0   .const      
-     VAR00006                                  CB1A       1       1       1   .const      
-     VAR00007                                  CB1B       1       1       0   .const      
-     VAR00008                                  CB1C       1       1       0   .const      
-     VAR00009                                  CB1D       1       1       0   .const      
-     VAR00010                                  CB1E       1       1       0   .const      
+     sampleSignalDCF77                         C7EF      9F     159       1   .text       
+     processEventsDCF77                        C88E     1CE     462      18   .text       
+     readPortSim                               CA5C      AE     174       1   .text       
+     initializePortSim                         CB0A       1       1       1   .text       
+     _LSHRS                                    CB0B      12      18       1   RUNTIME     
+     _LCMP_P                                   CB1D      15      21       3   RUNTIME     
+     _LNEG                                     CB32       D      13       1   RUNTIME     
+     _ILSEXT                                   CB3F       7       7       2   RUNTIME     
+     _CASE_DIRECT_BYTE                         CB46       5       5       1   RUNTIME     
+     _CASE_SEARCH_8                            CB4B      17      23       1   RUNTIME     
+     _CASE_SEARCH_8_BYTE                       CB62      1A      26       1   RUNTIME     
+     VAR00002                                  CB7C       1       1       1   .const      
+     VAR00003                                  CB7D       1       1       0   .const      
+     VAR00004                                  CB7E       1       1       0   .const      
+     VAR00005                                  CB7F       1       1       0   .const      
+     VAR00006                                  CB80       1       1       1   .const      
+     VAR00007                                  CB81       1       1       0   .const      
+     VAR00008                                  CB82       1       1       0   .const      
+     VAR00009                                  CB83       1       1       0   .const      
+     VAR00010                                  CB84       1       1       0   .const      
      int12                                     FFE6       2       2       0   .text       
 
 *********************************************************************************************
@@ -2995,56 +2995,56 @@ dcf77.c.o:
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xCB1F ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xCB85 ---- SIZE       4 ---
 Filling bytes inserted
  004E1002
-------- ROM-ADDRESS: 0xCB23 ---- RAM-ADDRESS: 0x1002 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xCB89 ---- RAM-ADDRESS: 0x1002 ---- SIZE       2 ---
 Name of initialized Object : dcf77Year
  07E1
-------- ROM-ADDRESS: 0xCB25 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCB8B ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xCB26 ---- RAM-ADDRESS: 0x1005 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCB8C ---- RAM-ADDRESS: 0x1005 ---- SIZE       1 ---
 Name of initialized Object : dcf77Month:1
  01
-------- ROM-ADDRESS: 0xCB27 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCB8D ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xCB28 ---- RAM-ADDRESS: 0x1007 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCB8E ---- RAM-ADDRESS: 0x1007 ---- SIZE       1 ---
 Name of initialized Object : dcf77Day:1
  01
-------- ROM-ADDRESS: 0xCB29 ---- RAM-ADDRESS: 0x1008 ---- SIZE      64 ---
+------- ROM-ADDRESS: 0xCB8F ---- RAM-ADDRESS: 0x1008 ---- SIZE      64 ---
 Name of initialized Object : dcf77Data
  4612000000 5C24925632 0000005C24
  9256520000 005C249246 720000005C
  2492569200 00005C2492 46B2000000
  5C249246D2 0000005C24 9256F20000
  005C2492
-------- ROM-ADDRESS: 0xCB69 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBCF ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xCB6A ---- RAM-ADDRESS: 0x1049 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBD0 ---- RAM-ADDRESS: 0x1049 ---- SIZE       1 ---
 Name of initialized Object : dcf77DataMin:1
  08
-------- ROM-ADDRESS: 0xCB6B ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBD1 ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xCB6C ---- RAM-ADDRESS: 0x104B ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBD2 ---- RAM-ADDRESS: 0x104B ---- SIZE       1 ---
 Name of initialized Object : i10ms.1:1
  09
-------- ROM-ADDRESS: 0xCB6D ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBD3 ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xCB6E ---- RAM-ADDRESS: 0x104D ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBD4 ---- RAM-ADDRESS: 0x104D ---- SIZE       1 ---
 Name of initialized Object : i100ms.2:1
  09
-------- ROM-ADDRESS: 0xCB6F ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBD5 ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xCB70 ---- RAM-ADDRESS: 0x104F ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xCBD6 ---- RAM-ADDRESS: 0x104F ---- SIZE       1 ---
 Name of initialized Object : iSec.3:1
  32
-------- ROM-ADDRESS: 0xCB71 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xCBD7 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3082,11 +3082,12 @@ initDCF77                 USES dcf77Hour dcf77Minute setClock displayDateDcf77
                                 initializePortSim 
 displayDateDcf77          USES dcf77Year dcf77Month dcf77Day 
                                 STRING..02d..02d..04d.1 sprintf writeLine 
-sampleSignalDCF77         USES presentEdge.3 lastEdge.2 readPortSim 
-                                T_raisingMark.7 T_fallingMark.8 T_low.6 T_high.5 
-processEventsDCF77        USES index.9 error.10 signal.11 processEventsDCF77 
-                                dcf77Minute dcf77Hour dcf77Day dcf77Month dcf77Year 
-                                setClock 
+sampleSignalDCF77         USES presentEdge.3 lastEdge.2 readPortSim setLED 
+                                clrLED T_raisingMark.7 T_fallingMark.8 T_low.6 
+                                T_high.5 
+processEventsDCF77        USES index.9 error.10 processEventsDCF77 setLED 
+                                signal.11 clrLED dcf77Minute dcf77Hour dcf77Day 
+                                dcf77Month dcf77Year setClock 
 readPortSim               USES i10ms.1 i100ms.2 iSec.3 iMin.4 dcf77DataMin 
                                 dcf77Data _LSHRS 
 
@@ -3153,6 +3154,10 @@ DEPENDENCY TREE
  |  |  
  |  +- processEventsDCF77  
  |  |  | 
+ |  |  +- setLED              
+ |  |  |    
+ |  |  +- clrLED              
+ |  |  |    
  |  |  +- setClock             (see above)
  |  |     
  |  +- displayDateDcf77     (see above)
@@ -3167,16 +3172,20 @@ DEPENDENCY TREE
     |  |  | 
     |  |  +- tick10ms            
     |  |     | 
-    |  |     +- setLED              
-    |  |     |    
-    |  |     +- clrLED              
-    |  |     |    
+    |  |     +- setLED               (see above)
+    |  |     |  
+    |  |     +- clrLED               (see above)
+    |  |     |  
     |  |     +- sampleSignalDCF77   
     |  |        | 
     |  |        +- readPortSim         
-    |  |           | 
-    |  |           +- _LSHRS              
-    |  |                
+    |  |        |  | 
+    |  |        |  +- _LSHRS              
+    |  |        |       
+    |  |        +- setLED               (see above)
+    |  |        |  
+    |  |        +- clrLED               (see above)
+    |  |           
     |  +- initTicker           (see above)
     |  |  
     |  +- clrLED               (see above)
@@ -3254,5 +3263,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 9
-Total size of all blocks to be downloaded: 2935
+Total size of all blocks to be downloaded: 3037
 
