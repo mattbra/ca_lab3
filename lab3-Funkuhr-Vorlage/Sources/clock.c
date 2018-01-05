@@ -15,6 +15,7 @@
 #include "dcf77.h"
 #include "thermo.h"
 #include "ad.h"
+#include "button.h"
 
 // Defines
 #define ONESEC  (1000/10)                       // 10ms ticks per second
@@ -27,6 +28,9 @@ CLOCKEVENT clockEvent = NOCLOCKEVENT;
 static char hrs = 0, mins = 0, secs = 0;
 static int uptime = 0;
 static int ticks = 0;
+extern int USmode;
+static char UShrs = 0;
+static char AMPM[2] = {0};
 
 // ****************************************************************************
 //  Initialize clock module
@@ -48,9 +52,10 @@ void tick10ms(void)
     {   clrLED(0x01);
     }
     uptime = uptime + 10;  // Update CPU time base
-                           
-    updateThermo(500);//(updateAD());
+    updateAD();                       
+    updateThermo();
     dcf77Event = sampleSignalDCF77(uptime);     // Sample the DCF77 signal
+    processButtons();
 
     //--- Add code here, which shall be executed every 10ms -------------------
     // ???
@@ -63,7 +68,8 @@ void tick10ms(void)
 // Parameter:   clock event, normally SECONDTICK
 // Returns:     -
 void processEventsClock(CLOCKEVENT event)
-{   if (event==NOCLOCKEVENT)
+{   
+    if (event==NOCLOCKEVENT)
         return;
 
     if (++secs >= 60)
@@ -75,6 +81,48 @@ void processEventsClock(CLOCKEVENT event)
             }
         }
      }
+     
+    if (USmode == 1) 
+    {
+      int ampmMode = 0;
+      AMPM[1] = 'M';
+      if (hrs > 12) 
+      {
+        UShrs = hrs - 12;
+        ampmMode = 1;
+        AMPM[0] = 'P';    
+      } 
+      else if (hrs <= 12) 
+      {
+        UShrs = hrs;
+        ampmMode = 0;
+        AMPM[0] = 'A';  
+      }
+    
+
+      if(ampmMode == 0 && UShrs == 12 && mins == 0 && secs ==0)
+      {	  
+    	  AMPM[0] = 'p';
+        ampmMode = 1;
+      }
+   
+      else if(ampmMode == 0 && UShrs == 13 && mins ==0 && secs ==0)
+      {
+   	    UShrs = 1;
+      }
+   
+      else if(ampmMode == 1 && UShrs == 12 && mins == 0 && secs ==0)
+      {	  
+   	    AMPM[0] = 'a';
+    	  ampmMode = 0;
+      }
+   
+      else if(ampmMode == 1 && UShrs == 13 && mins ==0 && secs ==0)
+      {
+    	  UShrs = 1;
+      }      
+      
+   }
 }
 
 // ****************************************************************************
@@ -94,8 +142,11 @@ void setClock(char hours, char minutes, char seconds)
 // Returns:     -
 void displayTimeClock(void)
 {   
-  char uhrzeit_temp[32] = "00:00:00"; 
-  (void) sprintf(uhrzeit_temp, "%02d:%02d:%02d %c%d°C", hrs, mins, secs, getTempChar(), getTempValue());
+  char uhrzeit_temp[32] = "00:00:00";
+  if (USmode == 1)
+    (void) sprintf(uhrzeit_temp, "%02d:%02d:%02d%s%c%doC", UShrs, mins, secs, AMPM, getTempChar(), getTempValue());
+  else
+    (void) sprintf(uhrzeit_temp, "%02d:%02d:%02d %c%d°C", hrs, mins, secs, getTempChar(), getTempValue());
   writeLine(uhrzeit_temp, 0);
 }
 

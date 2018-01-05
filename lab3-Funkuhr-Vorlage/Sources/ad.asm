@@ -3,7 +3,7 @@
         
 
 ; Import symbols
-         XREF ad_value
+         XREF clockEvent, ad_value
 ; Include derivative specific macros
         INCLUDE 'mc9s12dp256.inc'
 
@@ -33,4 +33,5 @@ updateAD:
 wait:           BRCLR ATD0STAT0, #$80, wait 
     
     LDD ATD0DR0
+    STD ad_value
     RTS

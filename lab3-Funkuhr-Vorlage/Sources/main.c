@@ -21,6 +21,9 @@
 
 #pragma LINK_INFO DERIVATIVE "mc9s12dp256b"
 
+int ad_value;
+int USmode = 0;
+
 // ****************************************************************************
 void main(void)
 {   EnableInterrupts;                           // Allow interrupts
@@ -30,6 +33,7 @@ void main(void)
     initClock();                                // Initialize Clock module
     initDCF77();                                // Initialize DCF77 module
     initTicker();                               // Initialize the time ticker
+    initAD();                              
 
     for(;;)                                     // Endless loop
     {   if (clockEvent != NOCLOCKEVENT)         // Process clock event

@@ -8,5 +8,5 @@
 */
 
 void initAD(void);
-int updateAD(void);
+void updateAD(void);
 

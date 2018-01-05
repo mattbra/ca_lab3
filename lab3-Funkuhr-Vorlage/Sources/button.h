@@ -1,4 +1,4 @@
-/*  Header for Thermometer module
+/*  Header for Button module
 
     Computerarchitektur 3
     Hochschule Esslingen
@@ -7,7 +7,5 @@
     Modified: -
 */
 
-
-void updateThermo();
-char getTempSign(void);
-char getTempValue(void);
+int readButtonPH2(void);
+void processButtons(void);

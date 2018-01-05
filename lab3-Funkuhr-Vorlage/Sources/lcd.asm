@@ -70,7 +70,7 @@
 ;   hardware) and symbol SIMULATOR (defined, when compiled for the SIMULATOR target).
   IFNDEF _HCS12_SERIALMON
     IFNDEF SIMULATOR 
-SIMULATOR: EQU 1
+;SIMULATOR: EQU 1
     ENDIF
   ENDIF
 

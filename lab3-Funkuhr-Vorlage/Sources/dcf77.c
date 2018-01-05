@@ -49,9 +49,12 @@ void initializePort(void)
 // Returns:     0 if signal is Low, >0 if signal is High
 char readPort(void)
 {
-// --- Add your code here ----------------------------------------------------
-// --- ??? --- ??? --- ??? --- ??? --- ??? --- ??? --- ??? --- ??? --- ??? ---
-    return -1;
+    char input;
+    input = PTH_PTH0;
+    if (input >0)
+      return 1;
+    else
+      return 0;
 }
 
 // ****************************************************************************
@@ -61,7 +64,7 @@ void initDCF77(void)
 {   setClock((char) dcf77Hour, (char) dcf77Minute, 0);
     displayDateDcf77();
 
-    initializePortSim();
+    initializePort();
 }
 
 // ****************************************************************************
@@ -108,7 +111,7 @@ DCF77EVENT sampleSignalDCF77(int currentTime)
   static int T_fallingMark = 0;
   
   lastEdge = presentEdge;
-  presentEdge = readPortSim();
+  presentEdge = readPort();
   
   if (presentEdge == 0)
   {
@@ -145,11 +148,11 @@ DCF77EVENT sampleSignalDCF77(int currentTime)
     T_fallingMark = currentTime;
     T_high = currentTime - T_raisingMark;
     
-    if (((T_high + T_low) >= 900) && ((T_high + T_low) <= 1100)) 
+    if (((T_high + T_low) >= 700) && ((T_high + T_low) <= 1300)) 
     {
       event = VALIDSECOND;  
     }
-    else if (((T_high + T_low) >= 1900) && ((T_high + T_low) <= 2100)) 
+    else if (((T_high + T_low) >= 1700) && ((T_high + T_low) <= 2300)) 
     {
       event = VALIDMINUTE;  
     }
@@ -222,7 +225,7 @@ void processEventsDCF77(DCF77EVENT event)
     //Date
     dcf77Day = 1 * signal[36] + 2 * signal[37] + 4 * signal[38] + 8 * signal[39] + 10 * signal[40] + 20 * signal[41];
     dcf77Month = 1 * signal[45] + 2 * signal[46] + 4 * signal[47] + 8 * signal[48] + 10 * signal[49];
-    dcf77Year = 1 * signal[50] + 2 * signal[51] + 4 * signal[52] + 8 * signal[53] + 10 * signal[54] + 20 * signal[55] + 40 * signal[56] + 80 * signal[57];
+    dcf77Year = 1 * signal[50] + 2 * signal[51] + 4 * signal[52] + 8 * signal[53] + 10 * signal[54] + 20 * signal[55] + 40 * signal[56] + 80 * signal[57] +2000;
     
     //Prep. Task 4.2
     dcf77Weekday = 1 * signal[42] + 2 * signal[43] + 4 * signal[44];

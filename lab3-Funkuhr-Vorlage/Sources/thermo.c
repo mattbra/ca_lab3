@@ -9,7 +9,7 @@
 
 #include "ad.h"
 
-static int ad_value;
+extern int ad_value;
 static int temp_value;
 static char sign = ' ';
 static int upperLimit = 70;
